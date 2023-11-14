@@ -11,10 +11,11 @@ import UIKit
 
 @available(iOS 17.0, *)
 #Preview {
+    let logger = DemoAppLogger()
     let viewModel = SiteViewModelImpl(
-        remoteServer: SimulatedServer(),
+        remoteServer: SimulatedServer(logger: logger),
         imageStore: CachedImageStore(),
-        logger: DemoAppLogger(),
+        logger: logger,
         navigator: SiteNavigatorStub()
     )
     let view = SitesView(

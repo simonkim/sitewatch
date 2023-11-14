@@ -40,7 +40,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F4B0741429C0C39F003931A2"
+               BlueprintIdentifier = "F48ADE0E2B0336CA00A9155A"
                BuildableName = "SiteWatchTests.xctest"
                BlueprintName = "SiteWatchTests"
                ReferencedContainer = "container:SiteWatch.xcodeproj">

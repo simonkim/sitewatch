@@ -9,8 +9,7 @@ import Foundation
 
 /// Stub implementation for Preview, does nothing
 struct SiteNavigatorStub: SitesNavigator {
-    func navigate(_ envelope: SitesSceneNavigationEnvelope) {
-        
+    func navigate(toSiteDetail site: Site) {
     }
 }
 

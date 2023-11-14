@@ -14,5 +14,5 @@ protocol RemoteServer {
 }
 
 protocol SiteEvent {
-    
+    var timestamp: Date { get }
 }

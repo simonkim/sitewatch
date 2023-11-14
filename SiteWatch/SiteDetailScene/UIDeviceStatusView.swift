@@ -57,13 +57,18 @@ class UIDeviceStatusView: UIView {
     
     var viewModel: ViewModel = .empty {
         didSet {
-            titleLabel.text = viewModel.title
+            if titleLabel.text != viewModel.title {
+                titleLabel.animatedUpdate { [weak self] view in
+                    (view as! UILabel).text = self?.viewModel.title
+                }
+            }
+            titleLabel.highlightChange(text: viewModel.title)
+            captionBar.highlightChange(text: viewModel.caption)
             coverImage.image = viewModel.coverImage
-            captionBar.text = viewModel.caption
             statusIconsBar.isHidden = !viewModel.isStatusIconsBarVisible
-            statusIconsBar.attributedText = viewModel.isStatusIconsBarVisible
-            ? makeStatusIconsBarText(with: viewModel.vitalStatus)
-            : NSAttributedString()
+            statusIconsBar.highlightChange(attributedText: viewModel.isStatusIconsBarVisible
+                                           ? makeStatusIconsBarText(with: viewModel.vitalStatus)
+                                           : NSAttributedString())
         }
     }
     private let sizeClass: SizeClass
@@ -206,6 +211,35 @@ private extension UIDeviceStatusView.SizeClass {
                 .preferredFont(forTextStyle: .caption1)
         case .small:
                 .preferredFont(forTextStyle: .caption2)
+        }
+    }
+}
+
+extension UIView {
+    func animatedUpdate(_ update: @escaping (UIView) -> Void) {
+        let originalTransform = self.transform
+        UIView.transition(with: self,
+                          duration: 0.2,
+                          options: .curveEaseInOut,
+                          animations: {
+            self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            update(self)
+        }, completion: {_ in self.transform = originalTransform})
+    }
+}
+
+extension UILabel {
+    func highlightChange(text: String) {
+        guard self.text != text else { return }
+        animatedUpdate { view in
+            (view as! UILabel).text = text
+        }
+    }
+    
+    func highlightChange(attributedText: NSAttributedString) {
+        guard self.attributedText != attributedText else { return }
+        animatedUpdate { view in
+            (view as! UILabel).attributedText = attributedText
         }
     }
 }

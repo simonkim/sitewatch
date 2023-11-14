@@ -20,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        let server = SimulatedServer()
         let logger = DemoAppLogger()
+        let server = SimulatedServer(logger: logger)
 
         let homeScene = SitesScene(
             remoteServer: server,

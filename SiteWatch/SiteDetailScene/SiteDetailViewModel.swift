@@ -11,28 +11,98 @@ import UIKit
 
 class SiteDetailViewModelImpl: SiteDetailViewModel {
     typealias Item = DevicePanelViewModel
-    var items: AnyPublisher<[Item], Never> {
+    var title: String
+    var items: AnyPublisher<[SiteDetailItemChange], Never> {
         itemSubject.eraseToAnyPublisher()
     }
     
     private var site: Site
-    private let itemSubject: CurrentValueSubject<[Item], Never> = .init([])
+    private let logger: AppLogger
     private let measurementFormatter = MeasurementFormatter()
 
-    init(site: Site) {
+    private let itemSubject: CurrentValueSubject<[SiteDetailItemChange], Never> = .init([])
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(site: Site, events: AnyPublisher<SiteEvent, Never>, logger: AppLogger) {
         self.site = site
+        self.logger = logger
+        self.title = site.name
+
+        events
+            .sink { [weak self] event in
+                guard let self = self else { return }
+                let updatedDevices = self.site.updatedDeviceIndices(with: event)
+
+                if updatedDevices.count > 0 {
+                    self.logger.log(.info, "\(event)")
+                    updateView(with: self.site, updatedDevices: updatedDevices)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func send(_ action: SiteDetailAction) {
         switch action {
         case .onAppear:
-            let items = site.devices.enumerated().map { index, device in
-                Item(id: index,
-                     vital: .init(panelCover: device, only: [.connectivity, .battery]),
-                     measurements: device.measurements.map { .init(with: $0, formatter: measurementFormatter) })
-            }
-            self.itemSubject.send(items)
+            updateView(with: site)
         }
+    }
+    
+    private func updateView(with site: Site, updatedDevices: [Item.ID] = []) {
+        let items = site.devices.enumerated().map { index, device in
+            let change = SiteDetailItemChange(
+                change: updatedDevices.isEmpty ? .add : (updatedDevices.contains(index) ? .update : .unchanged),
+                item: Item(id: index,
+                           vital: .init(panelCover: device, only: [.connectivity, .battery]),
+                           measurements: device.measurements.map { .init(with: $0, formatter: measurementFormatter) })
+            )
+            return change
+        }
+        self.itemSubject.send(items)
+    }
+}
+
+extension Site {
+    
+    mutating func updatedDeviceIndices(with event: SiteEvent) -> [Int] {
+        switch event {
+        case let e as MeasurementEvent:
+            return update(measurement: e)
+        case let e as VitalStatusEvent:
+            return update(vital: e)
+
+        default:                            // unsupported event
+            return []
+        }
+    }
+    
+    /// Updates measurments of corresponding device and returns indices of updated devices
+    mutating func update(measurement: MeasurementEvent) -> [Int] {
+        guard let deviceIndex = devices.firstIndex(where: { device in
+            device.id == measurement.deviceId
+        }) else {
+            return []
+        }
+        
+        guard let measurementIndex = devices[deviceIndex].measurements.firstIndex(where: { $0.unit == measurement.measurement.unit}) else {
+            return []
+        }
+        devices[deviceIndex].measurements[measurementIndex] = measurement.measurement
+        return [deviceIndex]
+    }
+    
+    mutating func update(vital: VitalStatusEvent) -> [Int] {
+        guard let deviceIndex = devices.firstIndex(where: { device in
+            device.id == vital.deviceId
+        }) else {
+            return []
+        }
+        
+        guard let vitalIndex = devices[deviceIndex].vitals.firstIndex(where: { $0.deviceType == vital.deviceType}) else {
+            return []
+        }
+        devices[deviceIndex].vitals[vitalIndex].level = vital.level
+        return [deviceIndex]
     }
 }
 
@@ -83,7 +153,7 @@ extension DeviceDetailStatusViewModel {
         self.init(
             coverImage: device.photoImage ?? device.deviceType.coverUIImage(),
             title: device.name,
-            caption: "Updated #when",
+            caption: "Updated #when",     // TODO: `caption` displays when the last update to the statuc occured
             vitalStatus: device.vitals.filter { types.contains($0.deviceType) }
         )
     }

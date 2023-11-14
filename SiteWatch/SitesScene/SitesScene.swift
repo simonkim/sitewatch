@@ -21,6 +21,7 @@ struct SitesScene {
         let navigator = SitesNavigatorImpl(
             dependency: .init(
                 logger: logger,
+                remoteEvents: remoteServer.eventPublisher(),
                 navigationController: navigationController
             )
         )

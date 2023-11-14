@@ -5,20 +5,18 @@
 //  Created by Simon Kim on 11/11/23.
 //
 
-import Foundation
 import UIKit
+import Combine
 
 protocol SitesNavigator {
-    func navigate(_ envelope: SitesSceneNavigationEnvelope)
+    func navigate(toSiteDetail site: Site)
 }
 
-protocol SitesSceneNavigationEnvelope {
-    
-}
 
 class SitesNavigatorImpl: SitesNavigator {
     struct Dependency {
         let logger: AppLogger
+        let remoteEvents: AnyPublisher<SiteEvent, Never>
         weak var navigationController: UINavigationController?
     }
     
@@ -29,7 +27,11 @@ class SitesNavigatorImpl: SitesNavigator {
         self.dependency = dependency
     }
     
-    func navigate(_ envelope: SitesSceneNavigationEnvelope) {
+    func navigate(toSiteDetail site: Site) {
+        navigate(ToSiteDetail(site: site, events: dependency.remoteEvents, logger: logger))
+    }
+    
+    private func navigate(_ envelope: SitesSceneNavigationEnvelope) {
         guard let navigationController = dependency.navigationController else {
             logger.log(.error, "\(type(of: self)): Missing UINavigationController")
             return
@@ -45,8 +47,14 @@ class SitesNavigatorImpl: SitesNavigator {
     }
 }
 
+protocol SitesSceneNavigationEnvelope {
+    
+}
+
 struct ToSiteDetail: SitesSceneNavigationEnvelope {
     var site: Site
+    var events: AnyPublisher<SiteEvent, Never>
+    var logger: AppLogger
 }
 
 extension ToSiteDetail {
@@ -58,7 +66,11 @@ extension ToSiteDetail {
     ///        self.isBeingDismissed in the pushed view controller
     /// - Parameter navigationController: New view controller is pushed to this
     func present(navigationController: UINavigationController) {
-        let viewController = SiteDetailScene(site: site).viewController()
+        let viewController = SiteDetailScene(
+            site: site, 
+            events: events,
+            logger: logger
+        ).viewController()
 
         navigationController.pushViewController(viewController, animated: true)
     }
