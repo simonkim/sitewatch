@@ -43,14 +43,23 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Demo"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="github.com/simonkim" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Klf-aZ-I1B">
+                                <rect key="frame" x="76" y="496" width="241" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" systemColor="systemIndigoColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="9lz-YD-Vph" firstAttribute="trailing" secondItem="iQN-XY-HVN" secondAttribute="trailing" id="LeB-Fk-XhA"/>
                             <constraint firstItem="iQN-XY-HVN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="N2n-vJ-Cv0"/>
+                            <constraint firstItem="Klf-aZ-I1B" firstAttribute="top" secondItem="9lz-YD-Vph" secondAttribute="bottom" constant="7.6666666666666856" id="e0e-Gk-hma"/>
+                            <constraint firstItem="Klf-aZ-I1B" firstAttribute="centerX" secondItem="iQN-XY-HVN" secondAttribute="centerX" id="hQY-Gc-HsY"/>
                             <constraint firstItem="9lz-YD-Vph" firstAttribute="top" secondItem="iQN-XY-HVN" secondAttribute="bottom" constant="8" id="k0l-J1-Q0Z"/>
                             <constraint firstItem="iQN-XY-HVN" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="o0J-ag-NF7"/>
+                            <constraint firstItem="Klf-aZ-I1B" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="76" id="p8P-M5-v4j"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -63,6 +72,9 @@
         <image name="location.magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
