@@ -12,11 +12,11 @@ import UIKit
 @available(iOS 17.0, *)
 #Preview {
     let logger = DemoAppLogger()
-    let viewModel = SiteViewModelImpl(
+    let viewModel = SitesViewModelImpl(
         remoteServer: SimulatedServer(logger: logger),
         imageStore: CachedImageStore(),
         logger: logger,
-        navigator: SiteNavigatorStub()
+        navigator: SitesNavigatorStub()
     )
     let view = SitesView(
         viewModel: viewModel
@@ -28,6 +28,7 @@ import UIKit
 
 protocol SitesViewModel: ObservableObject {
     var siteDisplayContents: [FeatureSiteDisplayContent] { get }
+    var errorMessage: String? { get }
 
     func send(_ action: SiteAction)
 }
@@ -41,14 +42,6 @@ struct FeatureSiteDisplayContent: Identifiable {
         self.id = id
         self.poster = poster
         self.deviceVitals = deviceVitals
-    }
-    
-    init(site: Site, placeholderImage: Image = .init(uiImage: .featureSitePlaceHolder)) {
-        self.init(
-            id: site.id,
-            poster: .init(image: placeholderImage, title: site.name, description: site.description),
-            deviceVitals: site.deviceVitals
-        )
     }
 }
 
@@ -75,10 +68,6 @@ struct SitesView<ViewModel: SitesViewModel>: View {
             viewModel.send(.onAppear)
         }
     }
-}
-
-private extension UIImage {
-    static let featureSitePlaceHolder = UIColor.systemGray.asImage(size: CGSize(width: 64, height: 64))
 }
 
 extension UIColor {

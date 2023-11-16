@@ -6,10 +6,8 @@
 //
 import UIKit
 
-class CachedImageStore {
-    enum Error: Swift.Error {
-        case imageLoadingFailed
-    }
+class CachedImageStore: ImageStore {
+    typealias Error = ImageStoreError
     
     private let imageCache = NSCache<NSString, UIImage>()
     private var imageScale: CGFloat { UIScreen.main.scale }

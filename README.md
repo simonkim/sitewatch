@@ -15,7 +15,7 @@ view controller based navigation. See [`struct SitesViewController.swift`](SiteW
 
 The second screen, on the other hande, is written in UIKit with UICollectionViewController.
 
-![SiteDetailScene](README.images/SiteDetailScene.png)
+![SiteDetailScene](README.images/SiteDetailScene.gif)
 
 The [MVVM-Navigator Scene pattern](https://github.com/simonkim/lorenpicsumapp) is applied to this app project for clear boundaries of responsibilities, smooth dependency provision from one layer to another, as well as smooth navigation between two view controllers
 

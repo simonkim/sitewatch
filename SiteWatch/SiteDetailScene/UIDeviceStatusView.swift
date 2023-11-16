@@ -54,6 +54,7 @@ class UIDeviceStatusView: UIView {
     }
     
     private let sc: StyleConfig = StyleConfig()
+    private var currentVitalStatus: [DeviceVital] = []
     
     var viewModel: ViewModel = .empty {
         didSet {
@@ -66,9 +67,14 @@ class UIDeviceStatusView: UIView {
             captionBar.highlightChange(text: viewModel.caption)
             coverImage.image = viewModel.coverImage
             statusIconsBar.isHidden = !viewModel.isStatusIconsBarVisible
-            statusIconsBar.highlightChange(attributedText: viewModel.isStatusIconsBarVisible
-                                           ? makeStatusIconsBarText(with: viewModel.vitalStatus)
-                                           : NSAttributedString())
+            if viewModel.isStatusIconsBarVisible {
+                if currentVitalStatus != viewModel.vitalStatus {
+                    // Compare change in viewModel.vitalStatus instead of \.attributedText
+                    statusIconsBar.highlightChange(attributedText: makeStatusIconsBarText(with: viewModel.vitalStatus))
+                    currentVitalStatus = viewModel.vitalStatus
+                }
+            }
+
         }
     }
     private let sizeClass: SizeClass
@@ -237,7 +243,7 @@ extension UILabel {
     }
     
     func highlightChange(attributedText: NSAttributedString) {
-        guard self.attributedText != attributedText else { return }
+        guard self.text != attributedText.string else { return }
         animatedUpdate { view in
             (view as! UILabel).attributedText = attributedText
         }

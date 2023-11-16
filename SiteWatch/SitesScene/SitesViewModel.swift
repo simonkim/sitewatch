@@ -15,23 +15,43 @@ enum SiteAction {
     case onTapSite(_ id: FeatureSiteDisplayContent.ID)
 }
 
-class SiteViewModelImpl: SitesViewModel {
+enum SitesViewError: Error {
+    case failedToLoadSites
+}
+
+extension SitesViewError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .failedToLoadSites:
+            return NSLocalizedString(
+                "Failed to load sites", comment: "Failed to load sites from server"
+            )
+        }
+    }
+}
+
+class SitesViewModelImpl: SitesViewModel {
     typealias Model = Site
     
     @Published var siteDisplayContents: [FeatureSiteDisplayContent] = []
-    private var sites: [Site] = []
+    @Published var errorMessage: String?
+    var sites: [Site] = []
+    private var error: SitesViewError? {
+        didSet {
+            errorMessage = error?.localizedDescription ?? nil
+        }
+    }
     
     private let remoteServer: RemoteServer
-    private let imageStore: CachedImageStore
+    private let imageStore: ImageStore
     private let navigator: SitesNavigator
-    private var errorMessage = PassthroughSubject<String, Never>()
     private let logger: AppLogger
     
     private let featureImageTargetSize = CGSize(width: 400, height: 300)
     // Dispatch Queue of state update from Async tasks
     private let updateDq: DispatchQueue = .main
     
-    init(remoteServer: RemoteServer, imageStore: CachedImageStore, logger: AppLogger, navigator: SitesNavigator) {
+    init(remoteServer: RemoteServer, imageStore: ImageStore, logger: AppLogger, navigator: SitesNavigator) {
         self.remoteServer = remoteServer
         self.imageStore = imageStore
         self.logger = logger
@@ -53,6 +73,7 @@ class SiteViewModelImpl: SitesViewModel {
     }
     
     private func updateSiteDisplay(with fetchSites: @escaping () async throws -> [Model]) {
+        error = nil
         Task {
             do {
                 let sites = try await fetchSites()
@@ -65,7 +86,9 @@ class SiteViewModelImpl: SitesViewModel {
                     setSite(id: site.id, image: image)
                 }
             } catch {
-                errorMessage.send("Failed to fetch Sites")
+                updateDq.async {
+                    self.error = .failedToLoadSites
+                }
             }
         }
     }
@@ -77,4 +100,18 @@ class SiteViewModelImpl: SitesViewModel {
             }
         }
     }
+}
+
+extension FeatureSiteDisplayContent {
+    init(site: Site, placeholderImage: Image = .init(uiImage: .featureSitePlaceHolder)) {
+        self.init(
+            id: site.id,
+            poster: .init(image: placeholderImage, title: site.name, description: site.description),
+            deviceVitals: site.deviceVitals
+        )
+    }
+}
+
+private extension UIImage {
+    static let featureSitePlaceHolder = UIColor.systemGray.asImage(size: CGSize(width: 64, height: 64))
 }

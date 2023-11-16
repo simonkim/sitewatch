@@ -14,7 +14,6 @@
 		F47791AA2B0331AC00DB445E /* RemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47791A92B0331AC00DB445E /* RemoteServer.swift */; };
 		F47791AC2B0333CC00DB445E /* PreviewStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47791AB2B0333CC00DB445E /* PreviewStub.swift */; };
 		F47791AF2B03351300DB445E /* SiteSceneStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47791AE2B03351300DB445E /* SiteSceneStubs.swift */; };
-		F48ADE122B0336CA00A9155A /* SiteWatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48ADE112B0336CA00A9155A /* SiteWatchTests.swift */; };
 		F4AD2B4B2AFC098B00DFBEFF /* SitesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD2B4A2AFC098B00DFBEFF /* SitesScene.swift */; };
 		F4AD2B532AFC0DC000DFBEFF /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD2B512AFC0DC000DFBEFF /* AppLogger.swift */; };
 		F4AD2B542AFC0DC000DFBEFF /* DemoAppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD2B522AFC0DC000DFBEFF /* DemoAppLogger.swift */; };
@@ -37,6 +36,9 @@
 		F4B0740529C0C39E003931A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0740429C0C39E003931A2 /* SceneDelegate.swift */; };
 		F4B0740C29C0C39F003931A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4B0740B29C0C39F003931A2 /* Assets.xcassets */; };
 		F4B0740F29C0C39F003931A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4B0740D29C0C39F003931A2 /* LaunchScreen.storyboard */; };
+		F4B49F182B05EEAD009C569A /* SitesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B49F172B05EEAD009C569A /* SitesViewModelTests.swift */; };
+		F4B49F1A2B05F121009C569A /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B49F192B05F121009C569A /* ImageStore.swift */; };
+		F4B49F1D2B05F17E009C569A /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B49F1B2B05F17A009C569A /* Mocks.swift */; };
 		F4DD2F0A2B0017C500A483C0 /* SitesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DD2F092B0017C500A483C0 /* SitesViewModel.swift */; };
 		F4DD2F0C2B002A1E00A483C0 /* SitesNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DD2F0B2B002A1E00A483C0 /* SitesNavigator.swift */; };
 /* End PBXBuildFile section */
@@ -60,7 +62,6 @@
 		F47791AB2B0333CC00DB445E /* PreviewStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStub.swift; sourceTree = "<group>"; };
 		F47791AE2B03351300DB445E /* SiteSceneStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteSceneStubs.swift; sourceTree = "<group>"; };
 		F48ADE0F2B0336CA00A9155A /* SiteWatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SiteWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F48ADE112B0336CA00A9155A /* SiteWatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteWatchTests.swift; sourceTree = "<group>"; };
 		F4AD2B4A2AFC098B00DFBEFF /* SitesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesScene.swift; sourceTree = "<group>"; };
 		F4AD2B512AFC0DC000DFBEFF /* AppLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		F4AD2B522AFC0DC000DFBEFF /* DemoAppLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoAppLogger.swift; sourceTree = "<group>"; };
@@ -86,6 +87,9 @@
 		F4B0740E29C0C39F003931A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4B0741029C0C39F003931A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4B0743229C0C5C2003931A2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F4B49F172B05EEAD009C569A /* SitesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesViewModelTests.swift; sourceTree = "<group>"; };
+		F4B49F192B05F121009C569A /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		F4B49F1B2B05F17A009C569A /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		F4DD2F092B0017C500A483C0 /* SitesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesViewModel.swift; sourceTree = "<group>"; };
 		F4DD2F0B2B002A1E00A483C0 /* SitesNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesNavigator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +115,7 @@
 		F435031B29F5B6D50048A67D /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				F4B49F192B05F121009C569A /* ImageStore.swift */,
 				F423D22D2B0164E5004C2763 /* CachedImageStore.swift */,
 			);
 			path = Remote;
@@ -127,7 +132,8 @@
 		F48ADE102B0336CA00A9155A /* SiteWatchTests */ = {
 			isa = PBXGroup;
 			children = (
-				F48ADE112B0336CA00A9155A /* SiteWatchTests.swift */,
+				F4B49F1B2B05F17A009C569A /* Mocks.swift */,
+				F4B49F172B05EEAD009C569A /* SitesViewModelTests.swift */,
 			);
 			path = SiteWatchTests;
 			sourceTree = "<group>";
@@ -362,7 +368,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F48ADE122B0336CA00A9155A /* SiteWatchTests.swift in Sources */,
+				F4B49F182B05EEAD009C569A /* SitesViewModelTests.swift in Sources */,
+				F4B49F1D2B05F17E009C569A /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +400,7 @@
 				F4AD2B532AFC0DC000DFBEFF /* AppLogger.swift in Sources */,
 				F4AD2B632AFD721600DFBEFF /* DevicePanel.swift in Sources */,
 				F4DD2F0A2B0017C500A483C0 /* SitesViewModel.swift in Sources */,
+				F4B49F1A2B05F121009C569A /* ImageStore.swift in Sources */,
 				F47791AC2B0333CC00DB445E /* PreviewStub.swift in Sources */,
 				F4AD2B742AFF5CF100DFBEFF /* UIView+AutoLayout.swift in Sources */,
 				F4B0740529C0C39E003931A2 /* SceneDelegate.swift in Sources */,

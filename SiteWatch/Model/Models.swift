@@ -36,7 +36,7 @@ struct SiteDevice {
     var measurements: [SensorMeasurement] = []
 }
 
-struct DeviceVital {
+struct DeviceVital: Equatable {
     var deviceType: DeviceType
     var level: DeviceVitalLevel
 }

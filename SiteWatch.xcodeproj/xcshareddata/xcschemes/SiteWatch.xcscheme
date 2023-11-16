@@ -46,17 +46,6 @@
                ReferencedContainer = "container:SiteWatch.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F4B0741E29C0C39F003931A2"
-               BuildableName = "BooksUITests.xctest"
-               BlueprintName = "BooksUITests"
-               ReferencedContainer = "container:SiteWatch.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

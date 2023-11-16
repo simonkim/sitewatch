@@ -26,7 +26,7 @@ struct SitesScene {
             )
         )
         
-        let viewModel = SiteViewModelImpl(
+        let viewModel = SitesViewModelImpl(
             remoteServer: remoteServer,
             imageStore: imageStore,
             logger: logger,

@@ -28,7 +28,7 @@ class SitesNavigatorImpl: SitesNavigator {
     }
     
     func navigate(toSiteDetail site: Site) {
-        navigate(ToSiteDetail(site: site, events: dependency.remoteEvents, logger: logger))
+        navigate(SiteDetailScene(site: site, events: dependency.remoteEvents, logger: logger))
     }
     
     private func navigate(_ envelope: SitesSceneNavigationEnvelope) {
@@ -38,9 +38,11 @@ class SitesNavigatorImpl: SitesNavigator {
         }
         
         switch envelope {
-        case let siteDetail as ToSiteDetail:
-            siteDetail.present(navigationController: navigationController)
-            
+        case let siteDetail as SiteDetailScene:
+            navigationController.pushViewController(
+                siteDetail.viewController(), animated: true
+            )
+
         default:
             logger.log("Unknown navigation Envelope type: \(envelope)")
         }
@@ -48,30 +50,7 @@ class SitesNavigatorImpl: SitesNavigator {
 }
 
 protocol SitesSceneNavigationEnvelope {
-    
+    func viewController() -> UIViewController
 }
 
-struct ToSiteDetail: SitesSceneNavigationEnvelope {
-    var site: Site
-    var events: AnyPublisher<SiteEvent, Never>
-    var logger: AppLogger
-}
-
-extension ToSiteDetail {
-    
-    /// Presents View Controller for SiteDetail by pushing to the navigation stack
-    /// - Note When onDismiss = {} needs to be implemented,
-    ///        catch viewWillDisappear() and
-    ///        check self.isMovingFromParentViewController ||
-    ///        self.isBeingDismissed in the pushed view controller
-    /// - Parameter navigationController: New view controller is pushed to this
-    func present(navigationController: UINavigationController) {
-        let viewController = SiteDetailScene(
-            site: site, 
-            events: events,
-            logger: logger
-        ).viewController()
-
-        navigationController.pushViewController(viewController, animated: true)
-    }
-}
+extension SiteDetailScene: SitesSceneNavigationEnvelope {}
