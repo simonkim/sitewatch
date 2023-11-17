@@ -68,7 +68,7 @@ class SitesViewModelImpl: SitesViewModel {
                 logger.log(.error, "Site not found by id \(id)")
                 return
             }
-            navigator.navigate(toSiteDetail: site)
+            navigator.navigate(to: .siteDetail(site))
         }
     }
     

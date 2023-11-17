@@ -93,15 +93,14 @@ struct SitesScene {
 }
 ```
 
+# Unit Tests
+Unit test cases were a high priority from the beginning of this project. However, the plan had to quickly change to a prototype project so this project can be made available for my interviewers 🤪
+
+Model, ViewModel, ViewController, and Navigator are clearly separated and reconnected under MVVM-Navigator pattern, Unit test cases are being updated
+- [SitesViewModel Tests](SiteWatchTests/SitesViewModelTests.swift)
+- [SiteNavigator Tests](SiteWatchTests/SitesNavigatorTests.swift)
+
 # Work in progress
 
 Some job opening asks for FireBase proficiency for analytics, remote notification, events and many. Further work on this demo app project will introduce adaptation layers so the code
 doesn't directly depend on these 3rd party APIs so we can replace it with minimum effort. For example, FirBase backed apps can't run in China and we may want to plug a different solution for the same purpose. That's where this adaptation layers come in handy.
-
-Unit test cases were a high priority from the beginning of this project. However, the plan had to quickly change to a prototype project so this project can be made available for my interviewers 🤪
-
-Model, ViewModel, ViewController, and Navigator are clearly separated and reconnected under MVVM-Navigator pattern, Unit test cases will soon begin to be written ...
-
-- Cheers
-
-

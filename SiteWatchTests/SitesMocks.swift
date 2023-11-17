@@ -1,5 +1,5 @@
 //
-//  Mocks.swift
+//  SitesMocks.swift
 //  SiteWatch
 //
 //  Created by Simon Kim on 11/16/23.
@@ -8,6 +8,13 @@
 import UIKit
 import Combine
 @testable import SiteWatch
+
+class MockNavigationController: UIKitNavigatable {
+    var onPush: (UIViewController, Bool) -> Void = { _, _ in }
+    func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        onPush(viewController, animated)
+    }
+}
 
 extension SitesViewModelImpl {
     static func mocked(
@@ -46,16 +53,18 @@ class MockImageStore: ImageStore {
 
 }
 
-struct MockLogger: AppLogger {
+class MockLogger: AppLogger {
+    var onLog: (LogCategory, String) -> Void = { _, _ in  }
+
     func log(_ category: LogCategory, _ text: String) {
-        
+        onLog(category, text)
     }
 }
 
 struct MockNavigator: SitesNavigator {
-    var onNavigateToSiteDetail: (Site) -> Void = { _ in  }
+    var onNavigateTo: (SitesNavigationTarget) -> Void = { _ in  }
 
-    func navigate(toSiteDetail site: Site) {
-        onNavigateToSiteDetail(site)
+    func navigate(to target: SitesNavigationTarget) {
+        onNavigateTo(target)
     }
 }
